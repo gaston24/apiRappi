@@ -6,6 +6,10 @@ use App\Http\Controllers\ApiRappi;
 
 Route::namespace('App\\Http\\Controllers')->group(function () {
     
+    Route::get('/', function(){
+        return 'test ok';
+    });
+
     Route::get('/get-stores', [ApiRappi::class, 'getStores']);
     Route::get('/get-stores/{id}', [ApiRappi::class, 'getStore']);
     
@@ -15,6 +19,7 @@ Route::namespace('App\\Http\\Controllers')->group(function () {
     
     Route::post('/create-stock', [ApiRappi::class, 'stockCreate']);
     Route::put('/update-stock', [ApiRappi::class, 'stockUpdate']);
+    
     Route::get('/get-stock/{sku}/stores', [ApiRappi::class, 'stockGet']);
     Route::put('/get-stock/{storeId}/{sku}', [ApiRappi::class, 'stockStatus']);
     
