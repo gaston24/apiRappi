@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-
-class ApiRappi extends BaseController
+class RappiController extends BaseController
 {
     // STORES
     public function getStores(Request $request){
