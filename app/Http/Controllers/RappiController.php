@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 class RappiController extends BaseController
 {
     // STORES
-    public function getStores(Request $request){
+    public function getStores()
+    {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -28,14 +29,15 @@ class RappiController extends BaseController
 
         curl_close($curl);
 
-        return $this->sendResponse($response,"All stores");
+        return $response;
     }
 
-    public function getStore(Request $request){
+    public function getStore($numSuc)
+    {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => env('API_RAPPI_URL').'/stores'.'/'.$request->route('id'),
+        CURLOPT_URL => env('API_RAPPI_URL').'/stores'.'/'.$numSuc,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -52,11 +54,12 @@ class RappiController extends BaseController
 
         curl_close($curl);
 
-        return $this->sendResponse($response,"One store");
+        return $response;
     }
 
     // PRODUCTS
-    public function getProducts(Request $request){
+    public function getProducts()
+    {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -77,10 +80,11 @@ class RappiController extends BaseController
 
         curl_close($curl);
 
-        return $this->sendResponse($response,"All products");
+        return $response;
     }
 
-    public function createProducts(Request $request, $sku, $name, $categories){
+    public function createProducts($sku, $name, $categories)
+    {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -103,14 +107,15 @@ class RappiController extends BaseController
 
         curl_close($curl);
 
-        return $this->sendResponse($response,"Create product");
+        return $response;
     }
 
-    public function getProductsOne(Request $request){
+    public function getProductsOne($sku)
+    {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => env('API_RAPPI_URL').'/products'.'/'.$request->route('sku'),
+        CURLOPT_URL => env('API_RAPPI_URL').'/products'.'/'.$sku,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -127,12 +132,13 @@ class RappiController extends BaseController
 
         curl_close($curl);
 
-        return $this->sendResponse($response,"One products");
+        return $response;
     }
 
     // STOCK
 
-    public function stockCreate(Request $request, $storeId, $sku, $stock){
+    public function stockCreate($storeId, $sku, $stock)
+    {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -155,10 +161,11 @@ class RappiController extends BaseController
 
         curl_close($curl);
 
-        return $this->sendResponse($response,"Stock create");
+        return $response;
     }
 
-    public function stockUpdate(Request $request, $storeId, $sku, $stock){
+    public function stockUpdate($storeId, $sku, $stock)
+    {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -181,14 +188,15 @@ class RappiController extends BaseController
 
         curl_close($curl);
 
-        return $this->sendResponse($response,"Stock update");
+        return $response;
     }
 
-    public function stockGet(Request $request){
+    public function stockGet($sku)
+    {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => env('API_RAPPI_URL').'/product_stock'.'/'.$request->route('sku').'/stores',
+        CURLOPT_URL => env('API_RAPPI_URL').'/product_stock'.'/'.$sku.'/stores',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -205,14 +213,15 @@ class RappiController extends BaseController
 
         curl_close($curl);
 
-        return $this->sendResponse($response,"Return Stock");
+        return $response;
     }
     
-    public function stockStatus(Request $request, $status){
+    public function stockStatus($status, $storeId, $sku)
+    {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => env('API_RAPPI_URL').'/product_stock'.'/'.$request->route('storeId').'/'.$request->route('sku'),
+        CURLOPT_URL => env('API_RAPPI_URL').'/product_stock'.'/'.$storeId.'/'.$sku,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -231,7 +240,7 @@ class RappiController extends BaseController
 
         curl_close($curl);
 
-        return $this->sendResponse($response,"Status sku updated");
+        return $response;
     }
 
     
