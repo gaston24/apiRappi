@@ -96,7 +96,7 @@ class RappiController extends BaseController
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'sku='.$sku.'t&name='.$name.'&brand=XL_EXTRA_LARGE&categories='.$categories,
+        CURLOPT_POSTFIELDS => 'sku='.$sku.'&name='.$name.'&brand=XL_EXTRA_LARGE&categories='.$categories,
         CURLOPT_HTTPHEADER => array(
             'api_key: '.env('API_RAPPI_KEY'),
             'Content-Type: application/x-www-form-urlencoded'
@@ -137,7 +137,7 @@ class RappiController extends BaseController
 
     // STOCK
 
-    public function stockCreate($storeId, $sku, $stock)
+    public function stockCreate($storeId, $sku, $stock, $price)
     {
         $curl = curl_init();
 
@@ -150,7 +150,7 @@ class RappiController extends BaseController
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'store_id='.$storeId.'&product_sku='.$sku.'&stock='.$stock,
+        CURLOPT_POSTFIELDS => 'store_id='.$storeId.'&product_sku='.$sku.'&stock='.$stock.'&unit_price='.$price,
         CURLOPT_HTTPHEADER => array(
             'api_key: '.env('API_RAPPI_KEY'),
             'Content-Type: application/x-www-form-urlencoded'
@@ -164,7 +164,7 @@ class RappiController extends BaseController
         return $response;
     }
 
-    public function stockUpdate($storeId, $sku, $stock)
+    public function stockUpdate($storeId, $sku, $stock, $price)
     {
         $curl = curl_init();
 
@@ -176,11 +176,18 @@ class RappiController extends BaseController
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'store_id='.$storeId.'&product_sku='.$sku.'&stock='.$stock,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS =>'{
+            "store_id": '.$storeId.',
+            "product_sku": "'.$sku.'",
+            "stock": '.$stock.',
+            "unit_price": '.$price.',
+            "enabled": true
+        
+        }',
         CURLOPT_HTTPHEADER => array(
             'api_key: '.env('API_RAPPI_KEY'),
-            'Content-Type: application/x-www-form-urlencoded'
+            'Content-Type: application/json'
         ),
         ));
 
